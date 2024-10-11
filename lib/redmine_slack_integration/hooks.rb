@@ -33,6 +33,7 @@ module RedmineSlackIntegration
       ## Slack chat data
       data = {}
 
+      data['link_names'] = "1"
       ## Add slack channel
       data['channel'] = slack_info['channel']
 
@@ -86,6 +87,12 @@ module RedmineSlackIntegration
       ## Post message data
       thread_ts = post_maessage(nil, slack_info['token'], data)
       set_slack_thread_ts(issue, thread_ts)
+
+      ## Post message data to User
+      unless sui_assigned_to.blank?
+        data['channel'] = sui_assigned_to
+        post_maessage(nil, slack_info['token'], data)
+      end
     end
 
 ################################################################################
@@ -183,6 +190,11 @@ module RedmineSlackIntegration
       thread_ts = post_maessage(data['thread_ts'], slack_info['token'], data)
       if data['thread_ts'].blank? && !(thread_ts.blank?)
         set_slack_thread_ts(issue, thread_ts)
+      end
+
+      unless sui_assigned_to.blank?
+        data['channel'] = sui_assigned_to
+        post_maessage(nil, slack_info['token'], data)
       end
     end
 

@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/lib"
 require_dependency 'redmine_slack_integration/hooks'
 require_dependency 'redmine_slack_integration/issue_relations_controller_patch'
 
